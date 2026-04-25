@@ -1,4 +1,7 @@
+#include <cmath>
 #include <iostream>
+#include <string>
+#include <unistd.h>
 
 float calcul(std::string fonction,float x)
 {
