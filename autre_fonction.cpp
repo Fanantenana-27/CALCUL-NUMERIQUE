@@ -2,6 +2,7 @@
 #include <iostream>
 #include <string>
 #include <unistd.h>
+#include "autre_fonction.h"
 
 float calcul(std::string fonction,float x)
 {
