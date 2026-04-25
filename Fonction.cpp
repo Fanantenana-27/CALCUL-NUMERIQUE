@@ -27,7 +27,6 @@ float calcul(std::string fonction,float x)
         {
             
             avant=fonction.substr(0,i);
-            std::cout << "(Calcul) Avant x : " << avant << std::endl;
             valeur=std::stof(avant);
             if(valeur==0)
             {
@@ -36,7 +35,6 @@ float calcul(std::string fonction,float x)
             if(i+1 < fonction.size() && fonction[i+1]=='^')
             {
                 resultat=(float)pow(x,fonction[i+2]-'0');
-                std::cout << x <<"^" << fonction[(i+2)]<<"= "<<resultat<< std::endl;
                 reste=fonction.substr(i+3,fonction.size()-(i+3));
                 resultat=valeur * resultat;
             }
@@ -44,23 +42,18 @@ float calcul(std::string fonction,float x)
             {
                 reste=fonction.substr(i+1,fonction.size()-(i+1));
                 resultat=valeur * x;
-                std::cout << "Avant : " << avant << "valeur : " << valeur << " x : " << x << " REsultata : "<< resultat<< std::endl;
             }
-            //std::cout << "Fonction (calcul) --> reste : " << reste<< std::endl;
             sprintf(chaine,"%f%s",resultat,reste.c_str());
             fonction=chaine;
             i=0;
         }
-       // std::cout << "Fonction (calcul) : " << fonction << " --> Resultat : " << resultat << std::endl;
     }
     resultat=std::stof(fonction);
-    std::cout << "Resultat (calcul) : " << fonction << "==> Resultat final : " << resultat << std::endl;
     return(resultat);
 }
 
 float calcul_fonction(std::string fonction,float x)
 {
-    std::cout << "Fonction _ calcul_fonction : " << fonction << std::endl; 
     int i,j,ver;
     float resultat,a,b;
     char new_fonction[255];
@@ -72,7 +65,6 @@ float calcul_fonction(std::string fonction,float x)
         if(fonction[i]=='*' || fonction[i]=='/' || fonction[i]=='+' || fonction[i]=='-')
         {
             avant=fonction.substr(0,i);
-            std::cout << "(Calcul_fonction) Avant + : " << avant << std::endl;
             for(j=i+1;j<fonction.size();j++)
             {
                 if(fonction[j]=='*' || fonction[j]=='/' || fonction[j]=='+' || fonction[j]=='-')
@@ -81,9 +73,7 @@ float calcul_fonction(std::string fonction,float x)
                 }
             }
             apres=fonction.substr(i+1,j-(i+1));
-            std::cout << "(Calcul_fonction) Apres + : " << apres << std::endl;
             reste=fonction.substr(j,fonction.size()-j);
-            std::cout << "(Calcul_fonction) Reste + : " << reste << std::endl;
             a=calcul(avant,x);
             b=calcul(apres,x);
             switch (fonction[i])
@@ -106,17 +96,13 @@ float calcul_fonction(std::string fonction,float x)
             }
             fonction=std::to_string(resultat)+ reste;
         }
-        
-        //std::cout << "Fonction (calcul_fonction) : " << fonction << " --> Resultat : " << resultat << std::endl;
     }
     resultat=calcul(fonction,x);
-    std::cout << "Fonction (calcul_fonction) : " << fonction << " ==> Resultat finale : " << resultat << std::endl;
     return(resultat);
 }
 
 float calcul_entre_parenthese(std::string fonction,double x)
 {
-    std::cout << "Fonction _ entre_parenthese : " << fonction << std::endl; 
     int i,j,indice,compter_paranthese_ouvert;
     float resultat,fois;
     std::string entre_parenthese,avant_parenthese,apres_paranthese,tmp,chaine;
@@ -187,13 +173,9 @@ float calcul_entre_parenthese(std::string fonction,double x)
                 }
             }
             fonction=chaine;
-           // std::cout << "new fonction () : " << fonction << std::endl;
         }
-        //std::cout << "Fonction (calcul_calcul_entre_parenthese) : " << fonction << " --> Resultat : " << resultat << std::endl;
     }
     resultat=calcul_fonction(fonction,x);
-    //std::cout << fonction << "  :  " << resultat << std::endl; 
-    std::cout << "Fonction calcul_entre_parenthese) : " << fonction << " ==> Resultat finale : " << resultat << std::endl;
     return(resultat);
 }
 
@@ -201,7 +183,6 @@ float _fonction(std::string fonction ,float x)
 {
     float resultat;
     resultat=calcul_entre_parenthese(fonction,x);
-    std::cout << "RESULTAT : " << resultat << std::endl;
     return(resultat);
 }
 
@@ -263,7 +244,6 @@ float Fonction::dichotomie(float a , float b)
 {
     int compteur;
     float epsilon,milieu;
-
     epsilon=0.001;
     compteur=0;
     do 
