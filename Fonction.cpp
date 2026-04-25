@@ -27,6 +27,7 @@ float calcul(std::string fonction,float x)
         {
             
             avant=fonction.substr(0,i);
+            std::cout << "(Calcul) Avant x : " << avant << std::endl;
             valeur=std::stof(avant);
             if(valeur==0)
             {
@@ -68,36 +69,44 @@ float calcul_fonction(std::string fonction,float x)
     ver=0;
     for(i=0;i<fonction.size();i++)
     {
-        avant=fonction.substr(0,i);
-        for(j=i+1;j<fonction.size();j++)
+        if(fonction[i]=='*' || fonction[i]=='/' || fonction[i]=='+' || fonction[i]=='-')
         {
-            if(fonction[j]=='+' || fonction[j]=='-')
+            avant=fonction.substr(0,i);
+            std::cout << "(Calcul_fonction) Avant + : " << avant << std::endl;
+            for(j=i+1;j<fonction.size();j++)
             {
-                break;
+                if(fonction[j]=='*' || fonction[j]=='/' || fonction[j]=='+' || fonction[j]=='-')
+                {
+                    break;
+                }
             }
+            apres=fonction.substr(i+1,j-(i+1));
+            std::cout << "(Calcul_fonction) Apres + : " << apres << std::endl;
+            reste=fonction.substr(j,fonction.size()-j);
+            std::cout << "(Calcul_fonction) Reste + : " << reste << std::endl;
+            a=calcul(avant,x);
+            b=calcul(apres,x);
+            switch (fonction[i])
+            {
+                case '*':
+                    resultat=a*b;
+                    break;
+                case '/':
+                    resultat=a/b;
+                    break;
+                case '+':
+                    resultat=a+b;
+                    break;
+                case '-':
+
+                    resultat=a-b;
+                    break;
+                default:
+                    break;
+            }
+            fonction=std::to_string(resultat)+ reste;
         }
-        apres=fonction.substr(i+1,j-i+1);
-        reste=fonction.substr(j,fonction.size()-j);
-        a=calcul(avant,x);
-        b=calcul(apres,x);
-        switch (fonction[i])
-        {
-            case '*':
-                resultat=a+b;
-                break;
-            case '/':
-                resultat=a+b;
-                break;
-            case '+':
-                resultat=a+b;
-                break;
-            case '-':
-                resultat=a+b;
-                break;
-            default:
-                break;
-        }
-        fonction=std::to_string(resultat)+ reste;
+        
         //std::cout << "Fonction (calcul_fonction) : " << fonction << " --> Resultat : " << resultat << std::endl;
     }
     resultat=calcul(fonction,x);
@@ -108,7 +117,7 @@ float calcul_fonction(std::string fonction,float x)
 float calcul_entre_parenthese(std::string fonction,double x)
 {
     std::cout << "Fonction _ entre_parenthese : " << fonction << std::endl; 
-    int i,j,indice;
+    int i,j,indice,compter_paranthese_ouvert;
     float resultat,fois;
     std::string entre_parenthese,avant_parenthese,apres_paranthese,tmp,chaine;
     for(i=0;i<fonction.size();i++)
@@ -116,9 +125,12 @@ float calcul_entre_parenthese(std::string fonction,double x)
         if(fonction[i]=='(')
         {
             indice=0;
-            for (j=fonction.size();j>i;j--)
+            compter_paranthese_ouvert=1;
+            for(j=i+1;j<fonction.size();j++)
             {
-                if(fonction[j]==')')
+                if(fonction[j]=='('){ compter_paranthese_ouvert++; }
+                else if(fonction[j]==')') { compter_paranthese_ouvert--; }
+                if(compter_paranthese_ouvert==0)
                 {
                     indice=j;
                     break;
@@ -138,6 +150,7 @@ float calcul_entre_parenthese(std::string fonction,double x)
                         chaine = tmp + '+' + std::to_string(resultat);
                         break;
                     case '-' :
+
                         chaine = tmp + '-' + std::to_string(resultat);
                         break;
                     case '/' :
